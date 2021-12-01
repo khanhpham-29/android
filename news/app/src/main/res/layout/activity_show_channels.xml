@@ -5,9 +5,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <GridView
-        android:id="@+id/grid_news"
-        android:numColumns="2"
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
+        android:background="@mipmap/logo_default" />
+
+    <ListView
+        android:id="@+id/myListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

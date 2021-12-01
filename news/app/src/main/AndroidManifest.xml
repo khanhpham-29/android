@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="phamquoc.khanh.news">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.News">
+        <activity
+            android:name=".ShowChannels"
+            android:exported="true" />
+        <activity
+            android:name=".ShowHeadlines"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

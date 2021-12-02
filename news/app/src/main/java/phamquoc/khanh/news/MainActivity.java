@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     List<NewsItems> ListNewsItems;
 
     private void createNewsItemsList() {
-        int n = 3;
+
         String newsTitles[] = {
                 "Thanh niên",
                 "VNExpress",
@@ -33,32 +33,33 @@ public class MainActivity extends AppCompatActivity {
                 R.mipmap.logo_thanhnien,
                 R.mipmap.logo_vnexpress,
                 R.mipmap.logo_dantri
-
         };
         String[][] ThanhNienUrlCaptionMenu = {
-                {"https://feeds.npr.org/510289/podcast.xml", "Business"},
-                {"https://feeds.npr.org/344098539/podcast.xml", "Comedy"},
-                {"https://feeds.npr.org/510308/podcast.xml", "Science"},
-                {"https://feeds.npr.org/510298/podcast.xml", "Technology"},
-                {"https://feeds.npr.org/510306/podcast.xml", "Music"},
-                {"https://feeds.npr.org/510354/podcast.xml", "Kid & family"},
-                {"https://feeds.npr.org/510309/podcast.xml", "Society & culture"}
+                {"https://thanhnien.vn/rss/thoi-su/chinh-tri-227.rss", "Chính trị"},
+                {"https://thanhnien.vn/rss/video/phong-su-349.rss", "Phóng sự"},
+                {"https://thanhnien.vn/rss/thoi-su/chong-tin-gia-304.rss", "Chống tin giả"},
+                {"https://thanhnien.vn/rss/thoi-su/quoc-phong-64.rss", "Quốc phòng"},
+                {"https://thanhnien.vn/rss/the-gioi/goc-nhin-129.rss", "Góc nhìn"},
+                {"https://thanhnien.vn/rss/the-gioi/nguoi-viet-nam-chau-48.rss", "Người Việt năm châu"},
+                {"https://thanhnien.vn/rss/the-gioi/chuyen-la-269.rss", "Chuyện lạ 269"},
         };
         String[][] VNExpressUrlCaptionMenu = {
-                {"https://feeds.npr.org/510289/podcast.xml", "Business"},
-                {"https://feeds.npr.org/510308/podcast.xml", "Science"},
-                {"https://feeds.npr.org/510298/podcast.xml", "Technology"},
-                {"https://feeds.npr.org/510306/podcast.xml", "Music"},
-                {"https://feeds.npr.org/510354/podcast.xml", "Kid & family"},
-                {"https://feeds.npr.org/510309/podcast.xml", "Society & culture"}
+                {"https://vnexpress.net/rss/the-gioi.rss", "Thế giới"},
+                {"https://vnexpress.net/rss/thoi-su.rss", "Thời sự"},
+                {"https://vnexpress.net/rss/kinh-doanh.rss", "Kinh doanh"},
+                {"https://vnexpress.net/rss/the-thao.rss", "Thể thao"},
+                {"https://vnexpress.net/rss/giai-tri.rss", "Giải trí"},
+                {"https://vnexpress.net/rss/giao-duc.rss", "Giáo dục"},
+                {"https://vnexpress.net/rss/gia-dinh.rss", "Gia đình"},
         };
         String[][] DanTriUrlCaptionMenu = {
-                {"https://feeds.npr.org/510289/podcast.xml", "Business"},
-                {"https://feeds.npr.org/344098539/podcast.xml", "Comedy"},
-                {"https://feeds.npr.org/510308/podcast.xml", "Science"},
-                {"https://feeds.npr.org/510298/podcast.xml", "Technology"},
-                {"https://feeds.npr.org/510306/podcast.xml", "Music"},
-                {"https://feeds.npr.org/510309/podcast.xml", "Society & culture"}
+                {"https://dantri.com.vn/trangchu.rss", "Trang chủ"},
+                {"https://dantri.com.vn/suc-khoe/ung-thu.rss", "Ung thư"},
+                {"https://dantri.com.vn/suc-khoe/kien-thuc-gioi-tinh.rss", "Kiến thức giới tính"},
+                {"https://dantri.com.vn/xa-hoi/moi-truong.rss", "Môi trường"},
+                {"https://dantri.com.vn/giai-tri/thoi-trang.rss", "Thời trang"},
+                {"https://dantri.com.vn/giao-duc-khuyen-hoc/guong-sang.rss", "Gương sáng"},
+                {"https://dantri.com.vn/the-thao/bong-da-anh.rss", "Bóng đá Anh"},
         };
 
         List<String[][]> UrlCaptionsMenu = new ArrayList<>();
@@ -67,47 +68,35 @@ public class MainActivity extends AppCompatActivity {
         UrlCaptionsMenu.add(2,DanTriUrlCaptionMenu);
 
         ListNewsItems = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < newsTitles.length; i++) {
             NewsItems newsItem = new NewsItems(newsTitles[i], Logo[i], UrlCaptionsMenu.get(i));
             ListNewsItems.add(newsItem);
         }
 
     }
 
-    ArrayAdapter<String> aa;
-    NewsItemsAdapter na;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         this.setTitle("News app");
+
         createNewsItemsList();
 
         grid_news = (GridView) findViewById(R.id.grid_news);
-        na = new NewsItemsAdapter(ListNewsItems, this);
+        NewsItemsAdapter na = new NewsItemsAdapter(ListNewsItems, this);
         grid_news.setAdapter(na);
 
-//        aa = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1,
-//                newsTitles);
-//        grid_news.setAdapter(aa);
-
-//        context = getApplicationContext();
-//
-//        grid_news.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String news = newsTitles[i];
-//                Intent callShowChannels = new Intent(MainActivity.this, ShowChannels.class);
-//                Bundle data = new Bundle();
-//                data.putString("newsTitle", news);
-//                callShowChannels.putExtras(data);
-//                startActivity(callShowChannels);
-//            }
-//        });
+        grid_news.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsItems NewsItem = ListNewsItems.get(position);
+                Intent callShowChannels = new Intent(MainActivity.this, ShowChannels.class);
+                callShowChannels.putExtra("newsItem", NewsItem);
+                startActivity(callShowChannels);
+            }
+        });
 
     }//onCreate
 }

@@ -1,6 +1,8 @@
 package phamquoc.khanh.news;
 
-public class NewsItems {
+import java.io.Serializable;
+
+public class NewsItems implements Serializable {
     private String Name;
     private int Logo;
     private String[][] UrlCaptionMenu;

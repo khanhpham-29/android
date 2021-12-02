@@ -11,6 +11,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,9 @@ public class ShowHeadlines extends AppCompatActivity {
     // here we access RSS-feed and show corresponding headlines
     ArrayList<SingleItem> newsList = new ArrayList<SingleItem>();
     ListView myListView;
+    ImageView img_logo_channels;
     String newTitle, urlAddress, urlCaption;
+    int logo;
     SingleItem selectedNewsItem;
 
     @Override
@@ -36,8 +39,13 @@ public class ShowHeadlines extends AppCompatActivity {
         newTitle = sentData.getString("newsTitle");
         urlAddress = sentData.getString("urlAddress");
         urlCaption = sentData.getString("urlCaption");
+        logo = sentData.getInt("logo");
 
-        this.setTitle("Items in " + urlAddress + " - " + newTitle);
+        this.setTitle("Items in " + urlCaption + " - " + newTitle);
+
+        img_logo_channels = (ImageView) findViewById(R.id.img_logo_channels);
+        img_logo_channels.setImageResource(logo);
+
         // find out which intent is calling us & grab data bundle holding selected url & caption sent to us
         // update app’s top ‘TitleBar’ (eg. ‘NPR - Business Wed April 09, 2014’)
         myListView = (ListView) this.findViewById(R.id.myListView);
@@ -64,7 +72,7 @@ public class ShowHeadlines extends AppCompatActivity {
             //CAUTION: sometimes TITLE and DESCRIPTION include HTML markers
             final Uri storyLink = Uri.parse(selectedStoryItem.getLink());
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
-            myBuilder.setIcon(R.mipmap.logo_default)
+            myBuilder.setIcon(logo)
                     .setTitle(Html.fromHtml(urlCaption))
                     .setMessage(title + "\n\n" + Html.fromHtml(description) + "\n")
                     .setPositiveButton("Close", null)
